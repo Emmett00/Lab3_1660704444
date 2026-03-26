@@ -1,4 +1,3 @@
-// src/pages/Products.tsx
 import { useState } from "react";
 import { useInventoryContext } from "../context/InventoryContext";
 import type { Product } from "../types";
@@ -19,8 +18,6 @@ export default function Products() {
   const handleAdd = () => {
     if (!name) return;
     addProduct(name, price, quantity);
-
-    //reset form
     setName("");
     setPrice(0);
     setQuantity(0);
@@ -28,64 +25,104 @@ export default function Products() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold">Products</h1>
-      
-      {/*Search(ค้นหา)*/}
+      <h1 className="text-2xl font-semibold mb-6 text-blue-400">
+        Products
+      </h1>
+
+
+
+<div className="flex flex-row w-full gap-4">
+  
+  {/*Name Input*/}
+  <div className="flex flex-col flex-1 gap-1">
+    <label className="text-white font-semibold">Products</label>
+    <input 
+      type="text" 
+      value={name}
+      placeholder="Name" 
+      onChange={(e) => setName(e.target.value)}
+      className="w-full px-3 py-2 bg-[#020617] border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+    />
+  </div>
+
+  {/*Price Input*/}
+  <div className="flex flex-col flex-1 gap-1">
+    <label className="text-white font-semibold">Price</label>
+    <input 
+      type="number" 
+      value={price}
+      defaultValue={0} 
+      onChange={(e) => setPrice(Number(e.target.value))}
+      className="w-full px-3 py-2 bg-[#020617] border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+    />
+  </div>
+
+  {/*Quantity Input*/}
+  <div className="flex flex-col flex-1 gap-1">
+    <label className="text-white font-semibold">Quantity</label>
+    <input 
+      type="number" 
+      value={quantity}
+      defaultValue={0} 
+      onChange={(e) => setQuantity(Number(e.target.value))}
+      className="w-full px-3 py-2 bg-[#020617] border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+    />
+  </div>
+
+</div>
+    
+      <button
+        style={{ marginTop: '24px' }} 
+        className="w-full bg-blue-600 py-2 rounded-lg mb-6 hover:bg-blue-500 transition"
+        onClick={handleAdd}>
+        + Add Product
+      </button>
+
+      {/* Search */}
       <input
-        className="border p-2 my-2"
-        placeholder="ค้นหา..."
+        className="w-full bg-[#020617] border border-gray-700 rounded-lg px-3 py-2 mb-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Search product..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      {/*Add Form(เพิ่มรายชื่อ)*/}
-      <div className="flex gap-2 my-2">
-        <input
-          placeholder="ชื่อ"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <input
-          type="number"
-          placeholder="ราคา"
-          value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
-        />
-
-        <input
-          type="number"
-          placeholder="จำนวน"
-          value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
-        />
-
-        <button
-          className="bg-blue-500 text-white px-2"
-          onClick={handleAdd}
-        >
-          เพิ่ม
-        </button>
-      </div>
-
-      {/*List(แสดงรายการสินค้า)*/}
-      <div className="space-y-2">
+      {/* List */}
+      <div className="space-y-3">
         {filtered.map((p: Product) => (
           <div
             key={p.id}
-            className={`p-2 border ${
-              p.quantity === 0 ? "bg-red-50" : ""
+            className={`flex justify-between items-center p-4 rounded-xl border ${
+              p.quantity === 0
+                ? "bg-red-900/30 border-red-700"
+                : "bg-[#020617] border-gray-700"
             }`}
           >
-            <p>{p.name}</p>
-            <p>ราคา: {p.price}</p>
-            <p>จำนวน: {p.quantity}</p>
+            <div className="text-left">
+              <p className="font-medium">{p.name}</p>
+              <p className="text-sm text-gray-400">
+                Price: {p.price} THB • Quantity: {p.quantity} 
+              </p>
+            </div>
 
-            <button onClick={() => updateQuantity(p.id, 1)}>+</button>
-            <button onClick={() => updateQuantity(p.id, -1)}>-</button>
-            <button onClick={() => deleteProduct(p.id)}>ลบ</button>
+            <div className="flex items-center gap-2">
+              <button
+                className="w-8 h-8 px-2 py-0 border border-gray-600 rounded hover:bg-gray-800"
+                onClick={() => updateQuantity(p.id, -1)}>
+                -
+              </button>
 
-            {p.quantity === 0 && <span>สินค้าหมด</span>}
+              <button
+                className="w-8 h-8 px-2 py-0 border border-gray-600 rounded hover:bg-gray-800"
+                onClick={() => updateQuantity(p.id, 1)}>
+                +
+              </button>
+
+              <button
+                className="text-red-400 hover:text-red-300"
+                onClick={() => deleteProduct(p.id)}>
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
