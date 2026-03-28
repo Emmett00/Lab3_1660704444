@@ -25,12 +25,12 @@ export default function Products() {
 
   return (
     <div>
-      {/* 1. หัวข้อหน้า (สีฟ้าสว่างเหมือนเดิม) */}
+      {/* Topic */}
       <h1 className="text-2xl font-semibold mb-6 text-blue-400">
         Products
       </h1>
 
-      {/* 2. ส่วน Input 3 ช่องเรียงกัน (แนวนอน) */}
+      {/* Input */}
       <div className="flex flex-row w-full gap-4">
         {/* Name */}
         <div className="flex flex-col flex-1 gap-1">
@@ -67,7 +67,7 @@ export default function Products() {
         </div>
       </div>
       
-      {/* 3. ปุ่ม Add Product (สีน้ำเงิน กว้างเต็มจอ) */}
+      {/* Add Product */}
       <button
         style={{ marginTop: '24px' }} 
         className="w-full bg-blue-600 py-2 rounded-lg mb-6 hover:bg-blue-500 text-white font-medium transition"
@@ -75,7 +75,7 @@ export default function Products() {
         + Add Product
       </button>
 
-      {/* 4. ช่อง Search (อยู่ใต้ปุ่ม Add ตาม Layout เดิมที่คุณต้องการ) */}
+      {/* Search */}
       <input
         className="w-full bg-[#020617] border border-gray-700 rounded-lg px-3 py-2 mb-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Search product..."
@@ -83,7 +83,7 @@ export default function Products() {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      {/* 5. รายการสินค้า (List) */}
+      {/* List */}
       <div className="space-y-3">
         {filtered.map((p: Product) => (
           <div
